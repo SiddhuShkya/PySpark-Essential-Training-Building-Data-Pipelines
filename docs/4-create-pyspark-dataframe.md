@@ -1,4 +1,4 @@
-## Data Formatas and Loading Data
+## Data Formats and Loading Data
 
 We've already covered the basics of PySpark dataframes, lets create a new one from our previously downloaded taxi data. You can create a pyspark dataframe by loading data from various sources like:
 
@@ -7,6 +7,17 @@ We've already covered the basics of PySpark dataframes, lets create a new one fr
 - Relational Database (tables in HIVE, RDDs in spark)
 
 The example dataset we downloaded earlier (taxi data) was in the parquet format but pyspark can support many different formats. These includes CSV, JSON, ORC, and Avro. The main differences between these file types is the compression and how they handle schemas. But for all purposes, we can use them all in a similar way.
+
+### Overview: Working with PySpark DataFrames
+
+In this chapter, we'll learn:
+
+- What PySpark DataFrames are
+- What kinds of data formats can be used in PySpark
+- How to explore the schema and data types of a DataFrame
+- How to execute basic queries against DataFrames
+
+---
 
 Let's try this hands on and actually load some data.
 
