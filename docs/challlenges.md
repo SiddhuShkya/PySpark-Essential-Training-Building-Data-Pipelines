@@ -59,7 +59,7 @@ df_2026_combined = df_jan_2026.union(df_feb_2026)
 
 3. Only select the following columns from this combined dataframe and rename columns as indicated in parenthesis. Reassign the result to df_2026_combined.
 
-<img src="../images/challenge-3.png"
+<img src="../images/challenge-2-3.png"
      alt="pyspark-images"
      style="border:1px solid white; padding:1px; background:#fff;" />
 
