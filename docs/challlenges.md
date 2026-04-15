@@ -142,3 +142,75 @@ df_2026_combined.show()
 +-------------------+-------------------+--------------+--------------+---------------+-----------+-----------+------------+------------+---------+
 only showing top 20 rows
 ```
+
+--- 
+
+### Challenge 3
+
+Assume we want to determine the average total taxi ride cost for each drop-off borough. This means, how expensive are the rides depending on which borough of new york city they end in? Write code for the below following steps.
+
+1. Load the january taxi ride data into a dataframe called taxi_jan2026 and register a temporary view with the same name.
+
+> Solution:
+
+```python
+taxi_jan2026 = spark.read.parquet('/content/drive/MyDrive/pyspark_training/yellow_tripdata_2026-01.parquet')
+taxi_jan2026.createOrReplaceTempView('taxi_jan2026')
+```
+
+2. Load the taxi zone lookup data into a dataframe called taxi_lookup and register a temporary view with the same name.
+
+> Solution:
+
+```python
+taxi_lookup = spark.read.option('header', 'true').csv('/content/drive/MyDrive/pyspark_training/taxi_zone_lookup.csv')
+taxi_lookup.createOrReplaceTempView('taxi_lookup')
+```
+
+3. Use PySpark SQL to left join the 2 tables on the DOLocationID and the LocationID columns.
+
+- Make sure to only select the DOLocationID, Borough, and the total_amount columns.
+- Assign the result to a dataframe named joined_df.
+
+> Solution:
+
+```python
+query = '''
+SELECT * FROM taxi_jan2026
+LEFT JOIN taxi_lookup 
+ON taxi_jan2026.DOLocationID = taxi_lookup.LocationID;
+'''
+
+joined_df = spark.sql(query).select('DOLocationID', 'Borough', 'total_amount')
+```
+
+4. Using PySpark dataframe syntax, group the result by the Borough column and calculate the average total_amount using the avg method.
+
+- Alias the average column as avg_amount.
+- Display the resulting dataframe in the notebook.
+
+> Solution:
+
+```python
+from pyspark.sql.functions import avg
+
+result_df = joined_df.groupBy('Borough').agg(avg('total_amount').alias('avg_amount'))
+result_df.show()
+```
+
+> Output:
+
+```text
++-------------+------------------+
+|      Borough|        avg_amount|
++-------------+------------------+
+|       Queens|44.892264767063566|
+|          EWR|127.38218843969248|
+|      Unknown|  26.3913081781915|
+|     Brooklyn|41.826533148167016|
+|Staten Island|  89.1901436265709|
+|          N/A|106.94886896721088|
+|    Manhattan|26.403116092042005|
+|        Bronx| 41.75513806557704|
++-------------+------------------+
+```
