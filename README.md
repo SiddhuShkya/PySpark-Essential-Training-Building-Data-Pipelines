@@ -6,6 +6,12 @@
 
 ---
 
+### Certificate of Completion
+
+![Certificate](certificate/certificate.png)
+
+---
+
 ### About Instructor
 
 <table>
